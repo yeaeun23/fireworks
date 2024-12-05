@@ -1,8 +1,12 @@
-import CanvasOption from "./CanvasOption.js";
+import CanvasOption from "./js/CanvasOption.js";
+import Particle from "./js/Particle.js";
+import { randomNumBetween } from "./js/utils.js";
 
 class Canvas extends CanvasOption {
   constructor() {
     super();
+
+    this.particles = [];
   }
 
   init() {
@@ -15,6 +19,21 @@ class Canvas extends CanvasOption {
 
     this.canvas.style.width = this.canvasWidth + "px";
     this.canvas.style.height = this.canvasHeight + "px";
+
+    this.createParticles();
+  }
+
+  createParticles() {
+    const PARTICLE_NUM = 2000; // 파티클 개수
+    const x = randomNumBetween(0, this.canvasWidth); // 파티클 좌표
+    const y = randomNumBetween(0, this.canvasHeight);
+
+    for (let i = 0; i < PARTICLE_NUM; i++) {
+      const vx = randomNumBetween(-5, 5); // 파티클 가속도
+      const vy = randomNumBetween(-5, 5);
+
+      this.particles.push(new Particle(x, y, vx, vy));
+    }
   }
 
   render() {
@@ -22,7 +41,10 @@ class Canvas extends CanvasOption {
     let then = Date.now();
 
     const frame = () => {
-      requestAnimationFrame(frame);
+      // 파티클이 남았을 때만 실행 (CPU 사용량 ↓)
+      if (this.particles.length !== 0) {
+        requestAnimationFrame(frame);
+      }
 
       now = Date.now();
       delta = now - then;
@@ -31,8 +53,20 @@ class Canvas extends CanvasOption {
         return;
       }
 
-      // 테스트
-      this.ctx.fillRect(100, 100, 200, 200);
+      // 배경색으로 덮어쓰기(지우기)
+      this.ctx.fillStyle = this.bgColor;
+      this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+      // 그리기
+      this.particles.forEach((particle, index) => {
+        particle.update();
+        particle.draw();
+
+        // 안보이는 파티클은 배열에서 제거 (CPU 사용량 ↓)
+        if (particle.opacity < 0) {
+          this.particles.splice(index, 1);
+        }
+      });
 
       then = now - (delta % this.interval);
     };
