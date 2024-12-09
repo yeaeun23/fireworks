@@ -1,7 +1,7 @@
 import CanvasOption from "./CanvasOption.js";
 
 export default class Particle extends CanvasOption {
-  constructor(x, y, vx, vy, opacity,color) {
+  constructor(x, y, vx, vy, opacity, color) {
     super();
     this.x = x;
     this.y = y;

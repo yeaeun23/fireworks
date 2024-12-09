@@ -1,6 +1,7 @@
 import CanvasOption from "./js/CanvasOption.js";
-import Particle from "./js/Particle.js";
 import Tail from "./js/Tail.js";
+import Particle from "./js/Particle.js";
+import Spark from "./js/Spark.js";
 import { randomNumBetween, hypotenuse } from "./js/utils.js";
 
 class Canvas extends CanvasOption {
@@ -9,6 +10,7 @@ class Canvas extends CanvasOption {
 
     this.tails = [];
     this.particles = [];
+    this.sparks = [];
   }
 
   init() {
@@ -63,11 +65,12 @@ class Canvas extends CanvasOption {
       this.ctx.fillStyle = this.bgColor + "40"; // 투명도로 잔상 효과
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-      // 꼬리 그리기
+      // 꼬리 생성
       if (Math.random() < 0.03) {
         this.createTail();
       }
 
+      // 꼬리 그리기
       this.tails.forEach((tail, index) => {
         tail.update();
         tail.draw();
@@ -88,6 +91,22 @@ class Canvas extends CanvasOption {
         // 안보이는 파티클 배열에서 제거
         if (particle.opacity <= 0) {
           this.particles.splice(index, 1);
+        }
+
+        // 스파크 연결
+        if (Math.random() < 0.1) {
+          this.sparks.push(new Spark(particle.x, particle.y, 0.3));
+        }
+      });
+
+      // 스파크 그리기
+      this.sparks.forEach((spark, index) => {
+        spark.update();
+        spark.draw();
+
+        // 안보이는 스파크 배열에서 제거
+        if (spark.opacity <= 0) {
+          this.sparks.splice(index, 1);
         }
       });
 
