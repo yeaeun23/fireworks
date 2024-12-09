@@ -11,10 +11,10 @@ export default class Spark extends CanvasOption {
     this.colorDeg = colorDeg;
   }
   update() {
-    this.x += this.vx;
+    this.x += this.vx; // 퍼지는 효과
     this.y += this.vy;
 
-    this.opacity -= 0.01;
+    this.opacity -= 0.01; // 사라지는 효과
   }
   draw() {
     this.ctx.beginPath();
