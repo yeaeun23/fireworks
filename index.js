@@ -76,8 +76,17 @@ class Canvas extends CanvasOption {
         tail.update();
         tail.draw();
 
+        // 스파크 연결(올라갈수록 조금 생성)
+        for (let i = 0; i < Math.round(-tail.vy * 0.5); i++) {
+          const vx = randomNumBetween(-5, 5) * 0.05;
+          const vy = randomNumBetween(-5, 5) * 0.05;
+          const opacity = Math.min(-tail.vy, 0.5);
+
+          this.sparks.push(new Spark(tail.x, tail.y, vx, vy, opacity, tail.colorDeg));
+        }
+
         // 안보이는 꼬리 배열에서 제거(CPU 사용량 ↓)
-        if (tail.vy > -1) {
+        if (tail.vy > -0.7) {
           this.tails.splice(index, 1);
           // 불꽃 연결
           this.createParticles(tail.x, tail.y, tail.colorDeg);
@@ -96,7 +105,7 @@ class Canvas extends CanvasOption {
 
         // 스파크 연결
         if (Math.random() < 0.1) {
-          this.sparks.push(new Spark(particle.x, particle.y, 0.3));
+          this.sparks.push(new Spark(particle.x, particle.y, 0, 0, 0.3, 45));
         }
       });
 
