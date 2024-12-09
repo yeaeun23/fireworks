@@ -28,12 +28,12 @@ class Canvas extends CanvasOption {
   createTail() {
     const x = randomNumBetween(this.canvasWidth * 0.2, this.canvasWidth * 0.8);
     const vy = randomNumBetween(15, 20) * -1;
-    const color = "255, 255, 255";
+    const colorDeg = randomNumBetween(0, 360);
 
-    this.tails.push(new Tail(x, vy, color));
+    this.tails.push(new Tail(x, vy, colorDeg));
   }
 
-  createParticles(x, y, color) {
+  createParticles(x, y, colorDeg) {
     const PARTICLE_NUM = 400; // 파티클 개수
 
     for (let i = 0; i < PARTICLE_NUM; i++) {
@@ -42,8 +42,9 @@ class Canvas extends CanvasOption {
       const vx = r * Math.cos(angle); // 파티클 퍼지는 좌표(가속도)
       const vy = r * Math.sin(angle);
       const opacity = randomNumBetween(0.6, 0.9);
+      const _colorDeg = randomNumBetween(-20, 20) + colorDeg;
 
-      this.particles.push(new Particle(x, y, vx, vy, opacity, color));
+      this.particles.push(new Particle(x, y, vx, vy, opacity, _colorDeg));
     }
   }
 
@@ -79,7 +80,7 @@ class Canvas extends CanvasOption {
         if (tail.vy > -1) {
           this.tails.splice(index, 1);
           // 불꽃 연결
-          this.createParticles(tail.x, tail.y, tail.color);
+          this.createParticles(tail.x, tail.y, tail.colorDeg);
         }
       });
 

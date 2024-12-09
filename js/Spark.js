@@ -13,7 +13,7 @@ export default class Spark extends CanvasOption {
   draw() {
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, 1, 0, Math.PI * 2);
-    this.ctx.fillStyle = `rgba(255, 255, 0, ${this.opacity})`;
+    this.ctx.fillStyle = `hsla(45, 100%, 65%, ${this.opacity})`;
     this.ctx.fill();
     this.ctx.closePath();
   }
