@@ -1,4 +1,4 @@
-# 불꽃놀이(Canvas)
+# 불꽃놀이
 
 ## Demo
 * https://yeaeun23.github.io/fireworks/
