@@ -1,4 +1,4 @@
-# 불꽃놀이
+# fireworks
 
 ## Demo
 * https://yeaeun23.github.io/fireworks/
