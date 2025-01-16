@@ -9,6 +9,10 @@
 <br/><br/>
 
 ## Reference
+* <b>HSL 값 계산</b>
+    * https://www.w3schools.com/colors/colors_hsl.asp
+<br/><br/>
+
 * <b>패스트캠퍼스 - '인터랙티브 웹 완전 정복' 온라인 강의 실습</b>
     * https://fastcampus.co.kr/b2g_kdc_webmotion
 <br/><br/>
